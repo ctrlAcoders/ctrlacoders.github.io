@@ -1,0 +1,403 @@
+/* Add some margin to the page and set a default font and colour */
+
+body {
+  /* margin: 30px; */
+  font-family: "Georgia", serif;
+  line-height: 1.8em;
+  color: #333;
+}
+
+canvas {
+  border:1px solid #d3d3d3;
+  background-color: #f1f1f1;
+}
+/* Give headings their own font */
+
+h1, h2, h3, h4 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+@font-face {
+  font-family: gameScoreFont;
+  src: url(fonts/SuperGame-X3Rz9.ttf);
+}
+
+
+#successMessage h2 {
+  top: 60%;
+  left: 32.5%;
+  position: absolute;
+  font-size: 32px;
+  color: white;
+  font-family: ui-sans-serif;
+  font-weight: bold;
+}
+
+
+
+/*==================================ProgressBar Start==============================*/
+
+
+.chart {
+  background: rgba(0, 0, 0, 0.2);
+  justify-content: flex-start;
+  border-radius: 100px;
+  align-items: center;
+  position: relative;
+  padding: 0 5px;
+  display: flex;
+  height: 60px;
+  width: 500px;
+  top: 80%;
+  left: 12%;
+  border:  3px solid #a72e58;
+
+/*   //border-radius: 100px; */
+}
+  .chart span {
+      /* You can modify the value below to change the distance between the percentage number and the bar */
+      margin-left: 5px;
+      color: #fff;
+      font-weight: bolder;
+      font-size: 18px;
+  }
+
+.bar {
+  /* You can modify the total time used for the animation here */
+  animation: load 3s normal forwards;
+  /* 
+  Add a little spice by having a shadow below the bar.
+  Feel free to comment out this line below to have an even LITE version :D 
+  */
+  box-shadow: 0 10px 20px -10px #fff;
+
+  border-radius: 100px;
+  background: linear-gradient(to left, #50F10E, #40da2c );
+  height: 50px;
+  width: 0;
+} 
+
+@keyframes load {
+  0% {
+      width: 0;
+  }
+  100% {
+      /* You need to change the percentage below to match the value in the corresponding <span> */
+      width: 90%;
+  }
+}
+
+
+/*==================================ProgressBar End==============================*/
+
+
+/* Main content area */
+
+#content {
+  /* margin: 80px 70px; */
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  background-image: url("images/Home_Background-min.png");
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+
+/* Background image doesn't tile */
+  background-repeat: no-repeat;
+
+/* Background image is fixed in the viewport so that it doesn't move when
+the content's height is greater than the image's height */
+  background-attachment: fixed;
+
+/* This is what makes the background image rescale based
+on the container's size */
+  background-size: cover;
+}
+
+/* Header/footer boxes */
+
+.wideBox {
+  clear: both;
+  text-align: center;
+  margin: 70px;
+  padding: 10px;
+  background: #ebedf2;
+  border: 1px solid #333;
+}
+
+.wideBox h1 {
+  font-weight: bold;
+  margin: 20px;
+  color: #666;
+  font-size: 1.5em;
+}
+
+/* Slots for final card positions */
+
+#cardSlots {
+  margin: 50px auto 0 auto;
+  /* background: #ddf; */
+}
+
+/* The initial pile of unsorted cards */
+
+/* #cardPile {
+  margin: 0 auto;
+  background: #ffd;
+} */
+#countScore{
+  margin-top: 40px;
+  margin-right:40px ;
+  width: 250px;
+  height: 95px;
+  text-align: center;
+  /* border:2px solid red ; */
+  float:  right;
+  padding: 10px;
+  /* font-family: gameScoreFont; */
+  font-size: 50px;
+  font-weight: bold;
+  color: #5E2605;
+  top: 100px;
+  display: flex;
+  flex-direction: row;
+  background-image: url("images/scoreSideTab.png");
+  background-size: cover;
+  align-items: center;
+  justify-content: start;
+}
+
+#scoreText{
+  padding-top: 13px;
+  margin-left: 100px;
+  width: 70px;
+}
+
+#wrongScoreText{
+  margin-left: 10px;
+  width: 70px;
+}
+
+#countWrong{
+  margin-top: 40px;
+  margin-left:40px ;
+  width: 250px;
+  height: 95px;
+  text-align: center;
+  /* border:2px solid red ; */
+  float:  left;
+  padding: 10px;
+  /* font-family: gameScoreFont; */
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  top: 100px;
+  background-image: url("images/lifeBar.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+}
+
+#countLife{
+  
+  min-width: 650px;
+  height: 70px;
+  text-align: center;
+  /* border:2px solid red ; */
+  float:  left;
+  padding: 10px;
+  font-family: gameScoreFont;
+  font-size: 80px;
+  font-weight: bold;
+  color: red;
+  position: relative;
+  top: -120px;
+  
+}
+
+/* #countLife img
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: 128px ;
+    margin-top: 128px;
+} */
+ /* *{
+   border: 1px solid blue;
+ } */
+#cardSlots {
+  width: 910px;
+  height: 25%;
+  padding: 20px;
+  /* border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px; */
+  bottom: 10px;
+  left: 0px;
+  right: 0px;
+  position: fixed;
+  /* -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .3em rgba(0, 0, 0, .8); */
+}
+#cardPile {
+  width: 910px;
+  height: 120px;
+  padding: 20px;
+  position: fixed;
+  /* border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px; */
+  /* -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .3em rgba(0, 0, 0, .8);*/
+} 
+
+/* Individual cards and slots */
+
+#cardSlots div {
+  float: left;
+  width: 350px;
+  height: 350px;
+  padding: 10px;
+  padding-top: 20px;
+  padding-bottom: 0;
+  /* border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px; */
+  margin: 0 0 0 10px;
+  /* background: #fff; */
+}
+
+#cardPile div {
+  float: left;
+  width: 180px;
+  height: 180px;
+  padding: 10px;
+  padding-top: 20px;
+  padding-bottom: 0;
+  
+  margin: 0 0 0 10px;
+}
+
+#cardSlots div:first-child, #cardPile div:first-child {
+  margin-left: 0;
+}
+
+/* #cardSlots div.hovered {
+  background: #aaa;
+} */
+
+/* #cardSlots div {
+  border-style: dashed;
+} */
+
+/* #cardPile div {
+  background: #666;
+  color: #fff;
+  font-size: 30px;
+  text-shadow: 0 0 3px #000;
+} */
+
+/* #content div.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+} */
+
+/* Individually coloured cards */
+
+#card1.correct { background: red; }
+#card2.correct { background: brown; }
+#card3.correct { background: orange; }
+#card4.correct { background: yellow; }
+#card5.correct { background: green; }
+#card6.correct { background: cyan; }
+#card7.correct { background: blue; }
+#card8.correct { background: indigo; }
+#card9.correct { background: purple; }
+#card10.correct { background: violet; }
+
+
+/* "You did it!" message */
+#successMessage {
+  position: absolute;
+  left: 580px;
+  top: 250px;
+  width: 0;
+  height: 0;
+  z-index: 100;
+  background-image: url("images/level_card_pink.png");
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+
+/* Background image doesn't tile */
+  background-repeat: no-repeat;
+
+/* Background image is fixed in the viewport so that it doesn't move when
+the content's height is greater than the image's height */
+  /* background-attachment: fixed; */
+
+/* This is what makes the background image rescale based
+on the container's size */
+  background-size: cover;
+
+  /* border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  box-shadow: .3em .3em .5em rgba(0, 0, 0, .8); */
+  padding: 20px;
+}
+html,body,#content{
+  min-height: 100%;
+  height: 100%;
+}
+
+#contentOverlay{
+  width: 100%;
+  height: 100%;
+  background: #000000b8;
+  position: absolute;
+}
+
+.ui-droppable:first-child {
+  margin-left: 8% !important;
+}
+.ui-droppable:nth-child(2) {
+  margin-left: 25% !important;
+}
+
+.ui-droppable {
+  width: 265px !important;
+  height: 500px !important;
+}
+
+@media screen and (min-width: 480px) {
+  .ui-droppable {
+    width: 265px !important;
+    height: 500px !important;
+  }
+}
+.binImg{
+  display: block;
+  max-width: 100%;
+  height: auto;
+  
+}
+.trashImg{
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+  height: auto;
+ 
+}

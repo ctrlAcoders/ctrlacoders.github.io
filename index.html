@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Drag Drop Cards Game jQuery UI</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <div id="content">
+    <div id="overlay">
+      <div id="countScore">
+        <p id="scoreText">0</p>  
+      </div>
+      <div id="countWrong">
+        <p id="wrongScoreText">0</p> 
+      </div>
+      <!-- <div id="countLife">
+        <img id="life1" src="images/heart.png" style="width: 50px; ">
+        <img id="life3" src="images/heart.png" style="width: 50px; ">
+        <img id="life2" src="images/heart.png" style="width: 50px; ">
+        <img id="life4" src="images/heart.png" style="width: 50px; ">
+        <img id="life5" src="images/heart.png" style="width: 50px; ">
+        <img id="life6" src="images/heart.png" style="width: 50px; ">
+        <img id="life7" src="images/heart.png" style="width: 50px; ">
+        <img id="life8" src="images/heart.png" style="width: 50px; ">
+        <img id="life9" src="images/heart.png" style="width: 50px; ">
+        <img id="life10" src="images/heart.png" style="width: 50px;">
+      </div> -->
+
+
+      <div id="cardSlots">
+        <div class="ui-droppable"><img class="binImg" src="images/r.png"></div>
+        <div class="ui-droppable"><img class="binImg" src="images/nr.png"></div>
+      </div>
+
+      <div id="cardPile">
+        <div class="ui-drag">
+
+          <!-- <img class="trashImg" src="images/objects/trash1.webp"> -->
+        </div>
+      </div>
+      
+
+      <div id="contentOverlay">
+        <div id="successMessage">
+          <!-- <h2>You did it!</h2>
+          <button onclick="init()">Play Again!</button> -->
+
+          <h2>Level Completed</h2>
+          <div class="chart">
+            <div class="bar"></div>
+            <!-- Change the value below -->
+            <span id="value1">90</span>
+          </div>
+
+
+        </div>
+      
+      
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="./jsScript.js"></script>
+  
+
+</body>
+
+</html>

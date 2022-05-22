@@ -1,0 +1,30 @@
+Game Ui Design
+===============================================
+1. background Design
+2. 
+
+Game functions
+===============================================
+
+1.object falling
+2.top to bottom wise falling
+3. not reversable 
+4.bottom fixed end position to vanish object
+5.object vanishes into bin
+6.object into right bin, color green
+7.wrong bin throw object out of screen in 45 angle
+8.every 10 object speed increases
+9.
+
+Game Data management
+================================================
+1. user login with google
+2. game database
+3. user total play count
+4. game leaderboard
+5. per user each played scores
+
+Game sharing
+=================================================
+1.facebook insta sharing with hashtag
+2.in facebook share post there will be a play btn which leads to game website

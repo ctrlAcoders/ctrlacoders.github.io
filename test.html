@@ -1,0 +1,60 @@
+
+<html>
+    <head>
+    <title>Image Array Demo</title>
+    <script>
+    
+    var description = new Array("trash1", "trash2", "trash3", "trash4");
+    var pictures = new Array(3);
+    var counter = 0;
+    
+    
+    function initialize(){
+      // sets up the array with some startin values
+      // Andy Harris
+      pictures[0] = new Image(50, 50);
+      pictures[0].src = "images/objects/trash1.webp";
+      pictures[1] = new Image(50, 50);
+      pictures[1].src = "images/objects/trash2.jpg";
+      pictures[2] = new Image(50, 50);
+      pictures[2].src = "images/objects/trash3.png";
+      pictures[3] = new Image(50, 50);
+      pictures[3].src = "images/objects/trash4.jpg";
+    
+    } // end initialize 
+    
+    function upDate(){
+      //increments the counter and shows the next description
+      counter++;
+      if (counter > 3){
+        counter = 0;
+      } // end if
+      document.imgDisplay.src = pictures[counter].src;
+      document.myForm.txtDescription.value = description[counter];
+    } // end upDate
+    
+    </script>
+    </head>
+    
+    <body onLoad = "initialize()">
+    <center>
+    <h1>Image Array Demo<hr></h1>
+    <form name = "myForm">
+    <img src = "blank.gif"
+         name = "imgDisplay"
+         height = 100
+         width = 100>
+    <br>
+    
+    <input type = "text"
+           name = "txtDescription"
+           value = "blank">
+    <br>
+    <input type = "button"
+           value = "next"
+           onClick = "upDate()">
+    </form>
+    </center>
+    <hr>
+    </body>
+    </html>
