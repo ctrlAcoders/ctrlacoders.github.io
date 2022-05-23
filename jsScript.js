@@ -16,6 +16,8 @@ var objectCreated = 0;
 correctCards = 0;
 wrongCards = 0;
 
+var level = "first";
+
 var snowflake;
 $('#cardPile').html('');
 $('#cardSlots').html('');
@@ -32,8 +34,8 @@ var win = window,
 
 // Create the pile of shuffled cards
 var numbers = [1, 2, 3, 4];/* ['odd', 'even', 'even', 'odd', 'odd', 'odd', 'even', 'even', 'odd', 'even']; */
-var trashArr = ['t1.png', 't2.png', 't3.png', 't4.png'];
-var recycleArr = ['r1.png', 'r2.png', 'r3.png', 'r3.png'];
+var trashArr = ['t1.png', 't2.png', 't3.png', 't4.png', 't5.png', 't6.png'];
+var recycleArr = ['r1.png', 'r2.png', 'r3.png', 'r4.png', 'r2.png', 'r3.png'];
 
 var cardNameArr = [];
 var idArr = [];
@@ -198,7 +200,9 @@ function init() {
     document.getElementById("cardPile").style.bottom = y*0.25;
     // Hide the success message
     $('#contentOverlay').hide();
-
+    
+    $('#life1').hide();
+    $('#life2').hide();
     //
     $('#successMessage').css({
         left: '580px',
@@ -379,9 +383,30 @@ function handleCardDrop(event, ui) {
     //If all the cards have been placed correctly then
     //display a message and reset the cards for
     //another go
-    if (correctCards === 2  ) {
-        document.getElementById("content").style.backgroundImage = "url(images/office_shadow-min.png)";
 
+    if(wrongCards === 1){
+        $('#life1').show();
+    }
+    else if(wrongCards === 2){
+
+        $('#life2').show();
+        wrongCards = 0;
+        setTimeout(() => {
+
+            $('#life1').hide();
+            $('#life2').hide();
+
+            totalLife--;
+
+            document.getElementById("wrongScoreText").innerHTML = totalLife;
+
+        }, 500);
+    }
+
+
+    if (level === "first" && correctCards === 2  ) {
+       
+        level = "second";
         $('#contentOverlay').show();
         $('#successMessage').animate({
             left: '15%',
@@ -393,9 +418,34 @@ function handleCardDrop(event, ui) {
         });
 
         increase();
+
+        document.getElementById("content").style.backgroundImage = "url(images/park-min.png)";
+
+        setTimeout(() => {
+
+            $('#contentOverlay').hide();
+        }, 4000);
     }
-    else if(correctCards == 5){
+    else if(level === "second" && correctCards === 5){
+        level = "third";
+        $('#contentOverlay').show();
+        $('#successMessage').animate({
+            left: '15%',
+            top: '30%',
+            position: 'absolute',
+            width: '700px',
+            height: '700px',
+            opacity: 1
+        });
+
+        increase();
+
         document.getElementById("content").style.backgroundImage = "url(images/office_shadow-min.png)";
+
+        setTimeout(() => {
+
+            document.getElementById("contentOverlay").remove();
+        }, 4000);
     }
 
     document.getElementById("scoreText").innerHTML = correctCards;

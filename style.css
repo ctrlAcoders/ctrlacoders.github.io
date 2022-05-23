@@ -64,7 +64,7 @@ h1, h2, h3, h4 {
 
 .bar {
   /* You can modify the total time used for the animation here */
-  animation: load 3s normal forwards;
+  animation: load 4s normal forwards;
   /* 
   Add a little spice by having a shadow below the bar.
   Feel free to comment out this line below to have an even LITE version :D 
@@ -84,8 +84,11 @@ h1, h2, h3, h4 {
   100% {
       /* You need to change the percentage below to match the value in the corresponding <span> */
       width: 90%;
+      
   }
 }
+
+ 
 
 
 /*==================================ProgressBar End==============================*/
@@ -203,8 +206,7 @@ on the container's size */
 
 #countLife{
   
-  min-width: 650px;
-  height: 70px;
+  height: 55px;
   text-align: center;
   /* border:2px solid red ; */
   float:  left;
@@ -214,7 +216,7 @@ on the container's size */
   font-weight: bold;
   color: red;
   position: relative;
-  top: -120px;
+  left: 15px;
   
 }
 
@@ -366,7 +368,7 @@ html,body,#content{
 #contentOverlay{
   width: 100%;
   height: 100%;
-  background: #000000b8;
+  background: #000000cc;
   position: absolute;
 }
 
