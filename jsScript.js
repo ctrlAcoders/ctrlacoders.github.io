@@ -193,6 +193,15 @@ function increase() {
 
 //here is the init() function
 function init() {
+    /* var sound = new buzz.sound("sound/background", {
+        formats: [ "mp3"]
+    });
+    
+    sound.play()
+         .fadeIn()
+         .loop() */
+
+    /* document.getElementById("audioContainer").play(); */
 
     document.getElementById("wrongScoreText").innerHTML = totalLife;
     $(createTrashObjects);
@@ -404,7 +413,7 @@ function handleCardDrop(event, ui) {
     }
 
 
-    if (level === "first" && correctCards === 2  ) {
+    if (level === "first" && correctCards === 10  ) {
        
         level = "second";
         $('#contentOverlay').show();
@@ -426,7 +435,7 @@ function handleCardDrop(event, ui) {
             $('#contentOverlay').hide();
         }, 4000);
     }
-    else if(level === "second" && correctCards === 5){
+    else if(level === "second" && correctCards === 20){
         level = "third";
         $('#contentOverlay').show();
         $('#successMessage').animate({
