@@ -12,6 +12,8 @@ var totalLife = 10;
 
 var objectCreated = 0;
 
+var isPlaying;
+
 // Reset the game
 correctCards = 0;
 wrongCards = 0;
@@ -40,10 +42,43 @@ var recycleArr = ['r1.png', 'r2.png', 'r3.png', 'r4.png', 'r2.png', 'r3.png'];
 var cardNameArr = [];
 var idArr = [];
 
-$(init);
+
 
 var id = null;
 var flakesCount = null;
+
+$('#contentOverlay').hide();
+
+
+function play() {
+
+
+    $('#home').hide();
+
+    var audio = document.getElementById("audioContainer");
+    audio.play();
+
+    isPlaying =  true;
+
+    $(init);
+  }
+
+
+  function audioControl() {
+
+    var audio = document.getElementById("audioContainer");
+
+
+    if(isPlaying==true){
+        audio.pause();
+        isPlaying=false;
+    }else{
+        audio.play();
+        isPlaying=true;
+    }
+    
+
+  }
 
 function myMove(id) {
 
@@ -208,7 +243,7 @@ function init() {
 
     document.getElementById("cardPile").style.bottom = y*0.25;
     // Hide the success message
-    $('#contentOverlay').hide();
+    //$('#contentOverlay').hide();
     
     $('#life1').hide();
     $('#life2').hide();

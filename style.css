@@ -8,12 +8,16 @@ body {
 }
 
 canvas {
-  border:1px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
   background-color: #f1f1f1;
 }
+
 /* Give headings their own font */
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
@@ -50,17 +54,18 @@ h1, h2, h3, h4 {
   width: 500px;
   top: 80%;
   left: 12%;
-  border:  3px solid #a72e58;
+  border: 3px solid #a72e58;
 
-/*   //border-radius: 100px; */
+  /*   //border-radius: 100px; */
 }
-  .chart span {
-      /* You can modify the value below to change the distance between the percentage number and the bar */
-      margin-left: 5px;
-      color: #fff;
-      font-weight: bolder;
-      font-size: 18px;
-  }
+
+.chart span {
+  /* You can modify the value below to change the distance between the percentage number and the bar */
+  margin-left: 5px;
+  color: #fff;
+  font-weight: bolder;
+  font-size: 18px;
+}
 
 .bar {
   /* You can modify the total time used for the animation here */
@@ -72,23 +77,24 @@ h1, h2, h3, h4 {
   box-shadow: 0 10px 20px -10px #fff;
 
   border-radius: 100px;
-  background: linear-gradient(to left, #50F10E, #40da2c );
+  background: linear-gradient(to left, #50F10E, #40da2c);
   height: 50px;
   width: 0;
-} 
+}
 
 @keyframes load {
   0% {
-      width: 0;
+    width: 0;
   }
+
   100% {
-      /* You need to change the percentage below to match the value in the corresponding <span> */
-      width: 90%;
-      
+    /* You need to change the percentage below to match the value in the corresponding <span> */
+    width: 90%;
+
   }
 }
 
- 
+
 
 
 /*==================================ProgressBar End==============================*/
@@ -106,14 +112,14 @@ h1, h2, h3, h4 {
   /* Background image is centered vertically and horizontally at all times */
   background-position: center center;
 
-/* Background image doesn't tile */
+  /* Background image doesn't tile */
   background-repeat: no-repeat;
 
-/* Background image is fixed in the viewport so that it doesn't move when
+  /* Background image is fixed in the viewport so that it doesn't move when
 the content's height is greater than the image's height */
   background-attachment: fixed;
 
-/* This is what makes the background image rescale based
+  /* This is what makes the background image rescale based
 on the container's size */
   background-size: cover;
 }
@@ -149,14 +155,14 @@ on the container's size */
   margin: 0 auto;
   background: #ffd;
 } */
-#countScore{
+#countScore {
   margin-top: 40px;
-  margin-right:40px ;
+  margin-right: 40px;
   width: 250px;
   height: 95px;
   text-align: center;
   /* border:2px solid red ; */
-  float:  right;
+  float: right;
   padding: 10px;
   /* font-family: gameScoreFont; */
   font-size: 50px;
@@ -171,25 +177,25 @@ on the container's size */
   justify-content: start;
 }
 
-#scoreText{
+#scoreText {
   padding-top: 13px;
   margin-left: 100px;
   width: 70px;
 }
 
-#wrongScoreText{
+#wrongScoreText {
   margin-left: 10px;
   width: 70px;
 }
 
-#countWrong{
+#countWrong {
   margin-top: 40px;
-  margin-left:40px ;
+  margin-left: 40px;
   width: 250px;
   height: 95px;
   text-align: center;
   /* border:2px solid red ; */
-  float:  left;
+  float: left;
   padding: 10px;
   /* font-family: gameScoreFont; */
   font-size: 50px;
@@ -204,12 +210,12 @@ on the container's size */
   justify-content: start;
 }
 
-#countLife{
-  
+#countLife {
+
   height: 55px;
   text-align: center;
   /* border:2px solid red ; */
-  float:  left;
+  float: left;
   padding: 10px;
   font-family: gameScoreFont;
   font-size: 80px;
@@ -217,7 +223,7 @@ on the container's size */
   color: red;
   position: relative;
   left: 15px;
-  
+
 }
 
 /* #countLife img
@@ -228,7 +234,7 @@ on the container's size */
     margin-left: 128px ;
     margin-top: 128px;
 } */
- /* *{
+/* *{
    border: 1px solid blue;
  } */
 #cardSlots {
@@ -247,6 +253,7 @@ on the container's size */
   -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
   box-shadow: 0 0 .3em rgba(0, 0, 0, .8); */
 }
+
 #cardPile {
   width: 910px;
   height: 120px;
@@ -259,7 +266,7 @@ on the container's size */
   /* -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
   -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
   box-shadow: 0 0 .3em rgba(0, 0, 0, .8);*/
-} 
+}
 
 /* Individual cards and slots */
 
@@ -285,11 +292,12 @@ on the container's size */
   padding: 10px;
   padding-top: 20px;
   padding-bottom: 0;
-  
+
   margin: 0 0 0 10px;
 }
 
-#cardSlots div:first-child, #cardPile div:first-child {
+#cardSlots div:first-child,
+#cardPile div:first-child {
   margin-left: 0;
 }
 
@@ -316,16 +324,45 @@ on the container's size */
 
 /* Individually coloured cards */
 
-#card1.correct { background: red; }
-#card2.correct { background: brown; }
-#card3.correct { background: orange; }
-#card4.correct { background: yellow; }
-#card5.correct { background: green; }
-#card6.correct { background: cyan; }
-#card7.correct { background: blue; }
-#card8.correct { background: indigo; }
-#card9.correct { background: purple; }
-#card10.correct { background: violet; }
+#card1.correct {
+  background: red;
+}
+
+#card2.correct {
+  background: brown;
+}
+
+#card3.correct {
+  background: orange;
+}
+
+#card4.correct {
+  background: yellow;
+}
+
+#card5.correct {
+  background: green;
+}
+
+#card6.correct {
+  background: cyan;
+}
+
+#card7.correct {
+  background: blue;
+}
+
+#card8.correct {
+  background: indigo;
+}
+
+#card9.correct {
+  background: purple;
+}
+
+#card10.correct {
+  background: violet;
+}
 
 
 /* "You did it!" message */
@@ -340,14 +377,14 @@ on the container's size */
   /* Background image is centered vertically and horizontally at all times */
   background-position: center center;
 
-/* Background image doesn't tile */
+  /* Background image doesn't tile */
   background-repeat: no-repeat;
 
-/* Background image is fixed in the viewport so that it doesn't move when
+  /* Background image is fixed in the viewport so that it doesn't move when
 the content's height is greater than the image's height */
   /* background-attachment: fixed; */
 
-/* This is what makes the background image rescale based
+  /* This is what makes the background image rescale based
 on the container's size */
   background-size: cover;
 
@@ -360,12 +397,54 @@ on the container's size */
   box-shadow: .3em .3em .5em rgba(0, 0, 0, .8); */
   padding: 20px;
 }
-html,body,#content{
+
+html,
+body,
+#content {
   min-height: 100%;
   height: 100%;
 }
 
-#contentOverlay{
+#home {
+  width: 100%;
+  height: 100%;
+  background: #000000cc;
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#playBtn {
+  background-color: #fff;
+  width: 150px;
+  height: 70px;
+}
+
+#audioControl {
+  left: -1%;
+  top: 50px;
+  position: relative;
+}
+
+
+#pauseBtn {
+  width: 80px;
+  height: 80px;
+  background: url("images/volume.png");
+  background-position: center center;
+
+  background-repeat: no-repeat;
+
+  /* position: absolute; */
+  background-size: cover;
+  border: none;
+}
+
+
+
+#contentOverlay {
   width: 100%;
   height: 100%;
   background: #000000cc;
@@ -375,6 +454,7 @@ html,body,#content{
 .ui-droppable:first-child {
   margin-left: 8% !important;
 }
+
 .ui-droppable:nth-child(2) {
   margin-left: 25% !important;
 }
@@ -390,16 +470,18 @@ html,body,#content{
     height: 500px !important;
   }
 }
-.binImg{
+
+.binImg {
   display: block;
   max-width: 100%;
   height: auto;
-  
+
 }
-.trashImg{
+
+.trashImg {
   display: block;
   max-width: 100%;
   object-fit: cover;
   height: auto;
- 
+
 }
