@@ -14,6 +14,17 @@ var objectCreated = 0;
 
 var isPlaying;
 
+
+var audio = document.getElementById("audioContainer");
+
+var rightDrag = document.getElementById("rightDrag");
+
+var wrongDrag = document.getElementById("wrongDrag");
+
+var levelComplete = document.getElementById("levelComplete");
+
+var gameOver = document.getElementById("gameOver");
+
 // Reset the game
 correctCards = 0;
 wrongCards = 0;
@@ -29,7 +40,7 @@ var win = window,
     docElem = doc.documentElement,
     body = doc.getElementsByTagName('body')[0],
     x = win.innerWidth || docElem.clientWidth || body.clientWidth,
-    y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+    y = win.innerHeight || docElem.clientHeight || body.clientHeight;
 
 
 
@@ -48,6 +59,7 @@ var id = null;
 var flakesCount = null;
 
 $('#contentOverlay').hide();
+$('#gameOver_Overlay').hide();
 
 
 function play() {
@@ -55,30 +67,30 @@ function play() {
 
     $('#home').hide();
 
-    var audio = document.getElementById("audioContainer");
+
     audio.play();
 
-    isPlaying =  true;
+    isPlaying = true;
 
     $(init);
-  }
+}
 
 
-  function audioControl() {
+function audioControl() {
 
     var audio = document.getElementById("audioContainer");
 
 
-    if(isPlaying==true){
+    if (isPlaying == true) {
         audio.pause();
-        isPlaying=false;
-    }else{
+        isPlaying = false;
+    } else {
         audio.play();
-        isPlaying=true;
+        isPlaying = true;
     }
-    
 
-  }
+
+}
 
 function myMove(id) {
 
@@ -91,7 +103,7 @@ function myMove(id) {
     var posY = 0;
     //console.log("screen Height "+ height +"   " + height*0.6.toString() +"   " + height*0.7.toString())
 
-    var endPos = parseInt(y*.76);
+    var endPos = parseInt(y * .76);
 
     clearInterval(id);
 
@@ -102,7 +114,7 @@ function myMove(id) {
     elem.addEventListener("mousedown", function (e) {
 
         clickElm = document.getElementById(this.id);
-       
+
         var rect = document.getElementById(this.id).getBoundingClientRect();
 
         posX = rect.left;
@@ -116,51 +128,51 @@ function myMove(id) {
     });
 
     elem.addEventListener("mouseup", function (e) {
-        
+
         var eId = this.id;
 
         console.log(eId);
-        
+
         elem = document.getElementById(eId);
         var rect = document.getElementById(this.id).getBoundingClientRect();
         var x = rect.left;
         var y = rect.top;
 
-        if(posX != x ){
-            var eM= document.getElementById(this.id);
+        if (posX != x) {
+            var eM = document.getElementById(this.id);
             eM.style.left = x + 'px';
             var afterX = rect.left;
             console.log(afterX);
         }
-       
-        if(posY != y){
-            var eM= document.getElementById(this.id);
+
+        if (posY != y) {
+            var eM = document.getElementById(this.id);
             eM.style.top = posY + 'px';
             var afterY = rect.top;
-            console.log(afterY);  
+            console.log(afterY);
         }
-       
+
         draggedElement = 1;
-        
+
     });
 
     function frame() {
 
-        if(draggedElement == 1){
+        if (draggedElement == 1) {
             if (pos == endPos) {
                 clearInterval(id);
                 elem.remove();
                 pos = 0;
                 flakesCount--;
-                console.log("Count "+flakesCount);
+                console.log("Count " + flakesCount);
 
-                if(flakesCount==0){
+                if (flakesCount == 0) {
                     idArr = [];
                     $(createTrashObjects);
                 }
-    
+
             } else {
-    
+
                 pos++;
                 elem.style.top = pos + 'px';
             }
@@ -169,17 +181,17 @@ function myMove(id) {
     }
 }
 
-function createTrashObjects(){
+function createTrashObjects() {
 
     objectCreated++;
 
     //var indx = cardNameArr.indexOf("")
 
-    for(var i = 0; i<cardNameArr.length; i++){
-        console.log("CardName "+cardNameArr[i]);
+    for (var i = 0; i < cardNameArr.length; i++) {
+        console.log("CardName " + cardNameArr[i]);
 
-        $("#"+cardNameArr[i]).remove();
-        if(i==cardNameArr.length-1){
+        $("#" + cardNameArr[i]).remove();
+        if (i == cardNameArr.length - 1) {
             cardNameArr = [];
         }
     }
@@ -219,7 +231,7 @@ function increase() {
     // Retrieve the percentage value
     let limit = parseInt(document.getElementById("value1").innerHTML, 10);
 
-    for(let i = 0; i <= limit; i++) {
+    for (let i = 0; i <= limit; i++) {
         setTimeout(function () {
             document.getElementById("value1").innerHTML = i + "%";
         }, SPEED * i);
@@ -241,10 +253,10 @@ function init() {
     document.getElementById("wrongScoreText").innerHTML = totalLife;
     $(createTrashObjects);
 
-    document.getElementById("cardPile").style.bottom = y*0.25;
+    document.getElementById("cardPile").style.bottom = y * 0.25;
     // Hide the success message
     //$('#contentOverlay').hide();
-    
+
     $('#life1').hide();
     $('#life2').hide();
     //
@@ -256,9 +268,9 @@ function init() {
     });
 
     // Create the card slots
-   
+
     var imagesArr = ['nr.png', 'r.png'];
-    
+
     for (var i = 1; i <= 2; i++) {
         if (i == 1) {
             $('<div><img class="binImg" src="images/' + imagesArr[i - 1] + '"></div>').data('number', 'trash').appendTo('#cardSlots').droppable({
@@ -282,7 +294,7 @@ function handleCardDrop(event, ui) {
     //Grab the slot number and card number
     var slotNumber = $(this).data('number');
     var cardNumber = ui.draggable.data('number');
-    var dragItemId= ui.draggable.attr('id');
+    var dragItemId = ui.draggable.attr('id');
     var item = document.getElementById(dragItemId);
 
     var index = cardNameArr.indexOf(dragItemId);
@@ -293,7 +305,7 @@ function handleCardDrop(event, ui) {
 
     if (slotNumber == "trash" && cardNumber % 2 != 0) {
         ui.draggable.addClass('correct');
-        ui.draggable.draggable('disable');        
+        ui.draggable.draggable('disable');
         ui.draggable.position({
             of: $(this), my: 'left top', at: 'left top'
         });
@@ -310,25 +322,27 @@ function handleCardDrop(event, ui) {
             }
         });
 
+        rightDrag.play();
+
         clearInterval(idArr[index]);
 
         item.remove();
-       
+
         console.log(dragItemId);
-      
+
         correctCards++; //increment keep track correct cards
 
         idArr.splice(index, 1);
 
-        cardNameArr.splice(index,1);
-        
+        cardNameArr.splice(index, 1);
+
         flakesCount--;
     }
     else if (slotNumber == "recycle" && cardNumber % 2 == 0) {
 
         ui.draggable.addClass('correct');
         ui.draggable.draggable('disable');
-        
+
         ui.draggable.position({
             of: $(this), my: 'left top', at: 'left top'
         });
@@ -344,28 +358,33 @@ function handleCardDrop(event, ui) {
                 $(this).animate(css, 200, "linear");
             }
         });
+
+        rightDrag.play();
+
         ui.draggable.draggable('option', 'revert', false);
-        
+
         clearInterval(idArr[index]);
 
         item.remove();
-     
+
         console.log(dragItemId);
-        
+
         correctCards++; //increment keep track correct cards
 
         idArr.splice(index, 1);
 
         cardNameArr.splice(index, 1);
-        
+
         flakesCount--;
     }
     else {
 
+        wrongDrag.play();
+
         ui.draggable.addClass('incorrect');
 
         ui.draggable.draggable('disable');
-        
+
         ui.draggable.position({
             of: $(this), my: 'left top', at: 'left top'
         });
@@ -378,17 +397,17 @@ function handleCardDrop(event, ui) {
         clearInterval(idArr[index]);
 
         item.remove();
- 
+
         console.log(dragItemId);
-       
+
         //correctCards--; //increment keep track correct cards
 
         wrongCards++;
 
         idArr.splice(index, 1);
 
-        cardNameArr.splice(index,1);
-        
+        cardNameArr.splice(index, 1);
+
         flakesCount--;
     }
 
@@ -428,10 +447,11 @@ function handleCardDrop(event, ui) {
     //display a message and reset the cards for
     //another go
 
-    if(wrongCards === 1){
+
+    if (wrongCards === 1) {
         $('#life1').show();
     }
-    else if(wrongCards === 2){
+    else if (wrongCards === 2) {
 
         $('#life2').show();
         wrongCards = 0;
@@ -444,12 +464,39 @@ function handleCardDrop(event, ui) {
 
             document.getElementById("wrongScoreText").innerHTML = totalLife;
 
+            if (totalLife == 0) {
+
+                idArr.forEach(element=>{
+                    clearInterval(element);
+                });
+
+                audio.pause();
+                gameOver.play();
+    
+                $('#gameOver_Overlay').show();
+    
+                $('#gameOverCard').animate({
+                    left: '15%',
+                    top: '30%',
+                    position: 'absolute',
+                    width: '700px',
+                    height: '700px',
+                    opacity: 1
+                });
+    
+    
+            }
+
         }, 500);
+
+        
     }
 
 
-    if (level === "first" && correctCards === 10  ) {
-       
+
+    if (level === "first" && correctCards === 10) {
+
+        levelComplete.play();
         level = "second";
         $('#contentOverlay').show();
         $('#successMessage').animate({
@@ -461,16 +508,33 @@ function handleCardDrop(event, ui) {
             opacity: 1
         });
 
+        idArr.forEach(element=>{
+            clearInterval(element);
+            console.log("IDS: " + element);
+            /* document.getElementById(element).remove(); */
+        });
+
+        cardNameArr.forEach(element=>{
+            
+            console.log("IDS: " + element);
+            document.getElementById(element).remove();
+        });
+
+
+
         increase();
 
         document.getElementById("content").style.backgroundImage = "url(images/park-min.png)";
 
         setTimeout(() => {
 
+            $(createTrashObjects);
             $('#contentOverlay').hide();
+            
         }, 4000);
     }
-    else if(level === "second" && correctCards === 20){
+    else if (level === "second" && correctCards === 20) {
+        levelComplete.play();
         level = "third";
         $('#contentOverlay').show();
         $('#successMessage').animate({
@@ -482,13 +546,27 @@ function handleCardDrop(event, ui) {
             opacity: 1
         });
 
+        idArr.forEach(element=>{
+            clearInterval(element);
+            console.log("IDS: " + element);
+            //document.getElementById(element).remove();
+        });
+
+        cardNameArr.forEach(element=>{
+            
+            console.log("IDS: " + element);
+            document.getElementById(element).remove();
+        });
+
         increase();
 
         document.getElementById("content").style.backgroundImage = "url(images/office_shadow-min.png)";
 
         setTimeout(() => {
 
+            $(createTrashObjects);
             document.getElementById("contentOverlay").remove();
+            
         }, 4000);
     }
 
@@ -496,7 +574,7 @@ function handleCardDrop(event, ui) {
     //document.getElementById("wrongScoreText").innerHTML = wrongCards;
 
 
-    if(cardNameArr.length==0){
+    if (cardNameArr.length == 0) {
 
         idArr = [];
         $(createTrashObjects);
