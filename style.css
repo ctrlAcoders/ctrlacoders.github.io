@@ -249,16 +249,20 @@ on the container's size */
   left: 0px;
   right: 0px;
   position: fixed;
+  
   /* -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
   -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
   box-shadow: 0 0 .3em rgba(0, 0, 0, .8); */
 }
 
 #cardPile {
-  width: 910px;
+  /*width: 910px;*/
+  width: 790px;
   height: 120px;
   padding: 20px;
   position: fixed;
+  /*position:relative;*/
+  margin:0 auto;
   /* border: 2px solid #333;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
