@@ -245,7 +245,7 @@ on the container's size */
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px; */
-  bottom: 10px;
+  bottom: 100px;
   left: 0px;
   right: 0px;
   position: fixed;
@@ -486,7 +486,7 @@ body,
 }
 
 .ui-droppable:first-child {
-  margin-left: 8% !important;
+  margin-left: 5% !important;
 }
 
 .ui-droppable:nth-child(2) {
@@ -507,8 +507,11 @@ body,
 
 .binImg {
   display: block;
-  max-width: 100%;
-  height: auto;
+  /* max-width: 100%;
+  height: auto; */
+
+  height: 100%;
+  width: auto;
 
 }
 

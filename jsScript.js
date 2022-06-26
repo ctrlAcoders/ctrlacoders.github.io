@@ -1,585 +1,486 @@
-
-$('.ui-draggable').draggable();
-
-
-//initially, number of correct cards is 0;
-var correctCards = 0;
-
-var wrongCards = 0;
-
-var totalLife = 10;
-
-
-var objectCreated = 0;
-
-var isPlaying;
-
-
-var audio = document.getElementById("audioContainer");
-
-var rightDrag = document.getElementById("rightDrag");
-
-var wrongDrag = document.getElementById("wrongDrag");
-
-var levelComplete = document.getElementById("levelComplete");
-
-var gameOver = document.getElementById("gameOver");
-
-// Reset the game
-correctCards = 0;
-wrongCards = 0;
-
-var level = "first";
-
-var snowflake;
-$('#cardPile').html('');
-$('#cardSlots').html('');
-
 var win = window,
     doc = document,
     docElem = doc.documentElement,
     body = doc.getElementsByTagName('body')[0],
     x = win.innerWidth || docElem.clientWidth || body.clientWidth,
-    y = win.innerHeight || docElem.clientHeight || body.clientHeight;
+    y = win.innerrHeight || docElem.clientHeight;
 
+//=================Initialize Variables==============//
+var interval;
+var selectedImage;
+var objectName;
+var numArrLength;
+var randomNum;
+var level;
 
+var createdObject;
 
+var frameRate = 10;
+var objectCount = 0;
+var objectCreateTime = 0;
+var totalLife = 3;
+var correctObjects = 0;
+var wrongObjects = 0;
+var missedObjects = 0;
 
-// Create the pile of shuffled cards
-var numbers = [1, 2, 3, 4];/* ['odd', 'even', 'even', 'odd', 'odd', 'odd', 'even', 'even', 'odd', 'even']; */
-var trashArr = ['t1.png', 't2.png', 't3.png', 't4.png', 't5.png', 't6.png'];
-var recycleArr = ['r1.png', 'r2.png', 'r3.png', 'r4.png', 'r2.png', 'r3.png'];
+var isAudioPlaying = true;
 
-var cardNameArr = [];
-var idArr = [];
+var binImageArr = ['r.png', 'nr.png'];
 
+var objectsNumArr = [];
+var objectNameArr = [];
+var objectIDArr = [];
+var trashArr = ['t1.png', 't2.png', 't3.png', 't4.png', 't5.png', 't6.png', 't7.png', 't2.png', 't3.png', 't7.png', 't1.png', 't2.png', 't3.png', 't7.png', 't5.png', 't6.png', 't1.png', 't7.png', 't3.png', 't4.png', 't1.png', 't2.png', 't3.png', 't4.png', 't7.png', 't6.png', 't1.png', 't2.png', 't7.png', 't4.png', 't2.png'];
+var recycleArr = ['r1.png', 'r2.png', 'r3.png', 'r4.png', 'r1.png', 'r1.png', 'r2.png', 'r3.png', 'r2.png', 'r4.png', 'r1.png', 'r2.png', 'r4.png', 'r2.png', 'r1.png', 'r4.png', 'r2.png', 'r3.png', 'r2.png', 'r4.png', 'r1.png', 'r4.png', 'r3.png', 'r2.png', 'r1.png', 'r4.png', 'r2.png', 'r3.png', 'r4.png', 'r1.png', 'r4.png']
 
+var audio = document.getElementById("audioContainer");
+var rightAudio = document.getElementById("rightDrag");
 
-var id = null;
-var flakesCount = null;
+var wrongAudio = document.getElementById("wrongDrag");
+
+var levelCompleteAudio = document.getElementById("levelComplete");
+
+var gameOverAudio = document.getElementById("gameOver");
+
+//=================HTML Div Initialize===============//
+$('#cardPile').html('');
+$('#cardSlots').show();
 
 $('#contentOverlay').hide();
 $('#gameOver_Overlay').hide();
+$('#life1').hide();
+$('#life2').hide();
 
+$('.ui-draggable').draggable();
 
+$('#successMessage').css({
+    left: '580px',
+    top: '250px',
+    width: 0,
+    height: 0
+})
+//=================HTML Div Initialization ENDS===============//
+
+//=========Play Button On-click function Start=========//
 function play() {
 
-
     $('#home').hide();
-
-
     audio.play();
-
+    audio.loop = true;
     isPlaying = true;
 
     $(init);
 }
+//=========Play Button On-click function END==========//
 
-
+//=========PlayPause Button On-click function Starts==========//
 function audioControl() {
-
-    var audio = document.getElementById("audioContainer");
-
-
-    if (isPlaying == true) {
+    if (isAudioPlaying == true) {
         audio.pause();
-        isPlaying = false;
+        isAudioPlaying = false;
     } else {
         audio.play();
-        isPlaying = true;
+        isAudioPlaying = true;
+    }
+}
+//=========PlayPause Button On-click function END==========//
+
+//=========Loading Bar Increasing Function Starts===========//
+function loadingBar() {
+    // Change the variable to modify the speed of the number increasing from 0 to (ms)
+    let SPEED = 40;
+    // Retrieve the percentage value
+    let limit = parseInt(document.getElementById("value").innerHTML, 10);
+
+    for (let i = 0; i <= limit; i++) {
+        setTimeout(function () {
+            document.getElementById("value").innerHTML = i + "%";
+        }, SPEED * i);
+    }
+}
+//==========Loading Bar Increasing Function END=============//
+
+//===============Object Number Array Setup Starts=================//
+function numberArrSetup() {
+
+    objectCount = 0;
+
+    for (var i = 1; i <= 30; i++) {
+        objectsNumArr.push(i);
+
+    }
+}
+//===============Object Number Array Setup ENDS=================//
+
+//===============BinImage Div Setup Starts=================//
+function binSetup() {
+    console.log("IN BIN SETUP FUNCTION");
+    for (var i = 0; i < binImageArr.length; i++) {
+        if (i == 0) {
+            console.log("IN BIN SETUP FUNCTION inside i 0");
+            $('<div><img class="binImg" src="images/' + binImageArr[i] + '"></div>')
+                .data('type', 'trash').appendTo('#cardSlots').droppable({
+                    accept: '#cardPile div',
+                    hoverClass: 'hovered',
+                    drop: handleObjectDrop
+                });
+        } else {
+            console.log("IN BIN SETUP FUNCTION 1");
+            $('<div><img class="binImg" src="images/' + binImageArr[i] + '"></div>')
+                .data('type', 'recycle').appendTo('#cardSlots').droppable({
+                    accept: '#cardPile div',
+                    hoverClass: 'hovered',
+                    drop: handleObjectDrop
+                });
+        }
+    }
+}
+//================BinImage Div Setup Ends==================//
+
+//================Draggable Object Div Creation Starts==================//
+function createObjects() {
+    numArrLength = objectsNumArr.length;
+    randomNum = Math.floor(Math.random() * (numArrLength - 1));
+
+    console.log("Random Number: " + randomNum + " trash Image: " + trashArr[objectsNumArr[randomNum]]);
+
+    if (objectsNumArr[randomNum] % 2 != 0) {
+        selectedImage = trashArr[objectsNumArr[randomNum]];
+        objectName = 'trash' + objectsNumArr[randomNum];
+    } else {
+        selectedImage = recycleArr[objectsNumArr[randomNum]];
+        objectName = 'recycle' + objectsNumArr[randomNum];
     }
 
+    createdObject = $('<div><img class="trashImg" src="images/objects/' + selectedImage + '"></div>')
+        .data('number', objectsNumArr[randomNum]).attr('id', objectName).appendTo('#cardPile').draggable({
+            containment: '#content',
+            stack: '#cardPile div',
+            cursor: 'none',
+            revert: true,
+            function: objectMove(objectName)
+        });
+
+    objectNameArr.push(objectName);
+    objectCount++;
+    objectsNumArr.splice(randomNum, 1);
+
+    console.log("Array " + objectsNumArr);
+
+    if (objectCount == 30) {
+        clearInterval(interval);
+    }
 
 }
+//=================Draggable Object Div Creation Ends===================//
 
-function myMove(id) {
-
+//====================Object Faming Setup Starts======================//
+function objectMove(id) {
     var elem = document.getElementById(id);
-    var clickElm;
-    var draggedElement = 1;
+    var draggedElement = false;
+
+    elem.style.position = "absolute";
+
+    var leftNum = (Math.floor(Math.random() * (elem.parentNode.parentElement.clientWidth-190))+2);
+
+    console.log("Random position : " + leftNum + ' '+ x);
+    elem.style.top = 0 + 'px';
+    elem.style.left  = leftNum+ 'px';
 
     var pos = 0;
     var posX = 0;
     var posY = 0;
-    //console.log("screen Height "+ height +"   " + height*0.6.toString() +"   " + height*0.7.toString())
 
-    var endPos = parseInt(y * .76);
+    var endPos = parseInt(y * .7);
 
     clearInterval(id);
 
-    id = setInterval(frame, 10);
+    var intrvlId = setInterval(frame, frameRate);
 
-    idArr.push(id);
+    console.log("Interval Id: " + intrvlId);
+
+    objectIDArr.push(intrvlId);
 
     elem.addEventListener("mousedown", function (e) {
-
-        clickElm = document.getElementById(this.id);
-
         var rect = document.getElementById(this.id).getBoundingClientRect();
-
         posX = rect.left;
         posY = rect.top;
-        console.log(posX);
-        console.log(posY);
 
-        elem = clearInterval(clickElm);
-        draggedElement = 2;
-
+        clearInterval(intrvlId);
+        draggedElement = true;
     });
 
     elem.addEventListener("mouseup", function (e) {
+        var rectInFrame = document.getElementById(this.id).getBoundingClientRect();
+        posX = rectInFrame.left;
+        posY = rectInFrame.top;
 
-        var eId = this.id;
+        elem.style.left = x + 'px';
+        elem.style.top = posY + 'px';
 
-        console.log(eId);
+        var index = objectIDArr.indexOf(intrvlId);
 
-        elem = document.getElementById(eId);
-        var rect = document.getElementById(this.id).getBoundingClientRect();
-        var x = rect.left;
-        var y = rect.top;
+        intrvlId = setInterval(frame, frameRate);
 
-        if (posX != x) {
-            var eM = document.getElementById(this.id);
-            eM.style.left = x + 'px';
-            var afterX = rect.left;
-            console.log(afterX);
-        }
+        console.log("ReInterval Id: " + intrvlId);
 
-        if (posY != y) {
-            var eM = document.getElementById(this.id);
-            eM.style.top = posY + 'px';
-            var afterY = rect.top;
-            console.log(afterY);
-        }
+        objectIDArr[index] = intrvlId;
 
-        draggedElement = 1;
+        draggedElement = false;
+
 
     });
 
     function frame() {
 
-        if (draggedElement == 1) {
-            if (pos == endPos) {
-                clearInterval(id);
-                elem.remove();
-                pos = 0;
-                flakesCount--;
-                console.log("Count " + flakesCount);
+        if (pos >= endPos) {
+            clearInterval(intrvlId);
+            missedObjects++;
 
-                if (flakesCount == 0) {
-                    idArr = [];
-                    $(createTrashObjects);
-                }
+            wrongAudio.play();
 
-            } else {
+            document.getElementById(id).remove();
+            
+            objectIDArr.splice(objectNameArr.indexOf(id), 1);
+            objectNameArr.splice(objectNameArr.indexOf(id), 1);
 
-                pos++;
-                elem.style.top = pos + 'px';
+            switch (missedObjects) {
+                case 1:
+                    $('#life1').show();
+                    break;
+                case 2:
+                    $('#life2').show();
+                    missedObjects = 0;
+                    setTimeout(function () {
+                        $('#life1').hide();
+                        $('#life2').hide();
+
+                        totalLife--;
+                        document.getElementById("wrongScoreText").innerHTML = totalLife;
+
+                        if (totalLife == 0) {
+                            clearInterval(interval);
+
+                            objectIDArr.forEach(elem => {
+                                clearInterval(elem);
+
+                            });
+
+                            $(gameOverScrn);
+
+                        }
+                    }, 500);
+                    break;
             }
-        }
-
-    }
-}
-
-function createTrashObjects() {
-
-    objectCreated++;
-
-    //var indx = cardNameArr.indexOf("")
-
-    for (var i = 0; i < cardNameArr.length; i++) {
-        console.log("CardName " + cardNameArr[i]);
-
-        $("#" + cardNameArr[i]).remove();
-        if (i == cardNameArr.length - 1) {
-            cardNameArr = [];
-        }
-    }
-
-    numbers.sort(function () { return Math.random() - .5 });
-    trashArr.sort(function () { return 0.5 - Math.random() });
-    recycleArr.sort(function () { return 0.5 - Math.random() });
-
-    for (var i = 0; i < numbers.length; i++) {
-
-        var image;
-        var cardName;
-
-        if (numbers[i] % 2 != 0) {
-            image = trashArr[i];
-            cardName = 'trash';
         } else {
-            image = recycleArr[i];
-            cardName = 'recycle';
+            pos++;
+            elem.style.top = pos + 'px';
         }
-        snowflake = $('<div> <img class="trashImg" src="images/objects/' + image + '"></div>').data('number', numbers[i]).attr('id', 'card' + cardName + i).appendTo('#cardPile').draggable({
-            containment: '#content',
-            stack: '#cardPile div',
-            cursor: 'none',
-            revert: true,
-            function: myMove('card' + cardName + i)
-        });
 
-        cardNameArr.push('card' + cardName + i);
-        flakesCount++;
     }
+
 }
 
-function increase() {
-    // Change the variable to modify the speed of the number increasing from 0 to (ms)
-    let SPEED = 40;
-    // Retrieve the percentage value
-    let limit = parseInt(document.getElementById("value1").innerHTML, 10);
 
-    for (let i = 0; i <= limit; i++) {
-        setTimeout(function () {
-            document.getElementById("value1").innerHTML = i + "%";
-        }, SPEED * i);
-    }
-}
+//======================Object Faming Setup Ends======================//
 
-//here is the init() function
+//===============INIT function Starts================//
 function init() {
-    /* var sound = new buzz.sound("sound/background", {
-        formats: [ "mp3"]
-    });
-    
-    sound.play()
-         .fadeIn()
-         .loop() */
-
-    /* document.getElementById("audioContainer").play(); */
 
     document.getElementById("wrongScoreText").innerHTML = totalLife;
-    $(createTrashObjects);
 
-    document.getElementById("cardPile").style.bottom = y * 0.25;
-    // Hide the success message
-    //$('#contentOverlay').hide();
+    objectCreateTime = 2000;
 
-    $('#life1').hide();
-    $('#life2').hide();
-    //
-    $('#successMessage').css({
-        left: '580px',
-        top: '250px',
-        width: 0,
-        height: 0
-    });
+    level = "first";
 
-    // Create the card slots
+    $(binSetup);
 
-    var imagesArr = ['nr.png', 'r.png'];
+    $(numberArrSetup);
 
-    for (var i = 1; i <= 2; i++) {
-        if (i == 1) {
-            $('<div><img class="binImg" src="images/' + imagesArr[i - 1] + '"></div>').data('number', 'trash').appendTo('#cardSlots').droppable({
-                accept: '#cardPile div',
-                hoverClass: 'hovered',
-                drop: handleCardDrop
-            });
-        } else {
-            $('<div><img class="binImg" src="images/' + imagesArr[i - 1] + '"></div>').data('number', 'recycle').appendTo('#cardSlots').droppable({
-                accept: '#cardPile div',
-                hoverClass: 'hovered',
-                drop: handleCardDrop
-            });
-        }
-    }
+    interval = setInterval(function () {
+        console.log("Length " + objectsNumArr.length);
+        $(createObjects);
+    }, objectCreateTime);
 
 }
+//===============INIT function ENDS================//
 
-function handleCardDrop(event, ui) {
+//===============Drop Handle Function Starts==============//
+function handleObjectDrop(event, ui) {
 
-    //Grab the slot number and card number
-    var slotNumber = $(this).data('number');
-    var cardNumber = ui.draggable.data('number');
+    //Grab the bin number and object number
+
+    var binType = $(this).data('type');
     var dragItemId = ui.draggable.attr('id');
-    var item = document.getElementById(dragItemId);
+    var dragItemNumber = ui.draggable.data('number');
+    var idIndx = objectNameArr.indexOf(dragItemId);
 
-    var index = cardNameArr.indexOf(dragItemId);
+    console.log("Drag Item Number :" + dragItemNumber);
 
-    //If the cards was dropped to the correct slot,
-    //change the card colour, position it directly
-    //on top of the slot and prevent it being dragged again
+    clearInterval(objectIDArr[idIndx]);
+    document.getElementById(dragItemId).remove();
 
-    if (slotNumber == "trash" && cardNumber % 2 != 0) {
-        ui.draggable.addClass('correct');
+    if (binType == "trash" && dragItemNumber % 2 != 0) {
         ui.draggable.draggable('disable');
-        ui.draggable.position({
-            of: $(this), my: 'left top', at: 'left top'
-        });
+        rightAudio.play();
+        correctObjects++;
 
-        //This prevents the card from being
-        //pulled back to its initial position
-        //once it has been dropped
-        ui.draggable.position({
-            of: $(this),
-            my: 'left top',
-            at: 'left top',
-            using: function (css, calc) {
-                $(this).animate(css, 200, "linear");
-            }
-        });
-
-        rightDrag.play();
-
-        clearInterval(idArr[index]);
-
-        item.remove();
-
-        console.log(dragItemId);
-
-        correctCards++; //increment keep track correct cards
-
-        idArr.splice(index, 1);
-
-        cardNameArr.splice(index, 1);
-
-        flakesCount--;
-    }
-    else if (slotNumber == "recycle" && cardNumber % 2 == 0) {
-
-        ui.draggable.addClass('correct');
+    } else if (binType == "recycle" && dragItemNumber % 2 == 0) {
         ui.draggable.draggable('disable');
+        rightAudio.play();
+        correctObjects++;
 
-        ui.draggable.position({
-            of: $(this), my: 'left top', at: 'left top'
-        });
-
-        //This prevents the card from being
-        //pulled back to its initial position
-        //once it has been dropped
-        ui.draggable.position({
-            of: $(this),
-            my: 'left top',
-            at: 'left top',
-            using: function (css, calc) {
-                $(this).animate(css, 200, "linear");
-            }
-        });
-
-        rightDrag.play();
-
-        ui.draggable.draggable('option', 'revert', false);
-
-        clearInterval(idArr[index]);
-
-        item.remove();
-
-        console.log(dragItemId);
-
-        correctCards++; //increment keep track correct cards
-
-        idArr.splice(index, 1);
-
-        cardNameArr.splice(index, 1);
-
-        flakesCount--;
-    }
-    else {
-
-        wrongDrag.play();
-
-        ui.draggable.addClass('incorrect');
-
+    } else {
         ui.draggable.draggable('disable');
-
-        ui.draggable.position({
-            of: $(this), my: 'left top', at: 'left top'
-        });
-
-        //This prevents the card from being
-        //pulled back to its initial position
-        //once it has been dropped
-        ui.draggable.draggable('option', 'revert', false);
-
-        clearInterval(idArr[index]);
-
-        item.remove();
-
-        console.log(dragItemId);
-
-        //correctCards--; //increment keep track correct cards
-
-        wrongCards++;
-
-        idArr.splice(index, 1);
-
-        cardNameArr.splice(index, 1);
-
-        flakesCount--;
+        wrongAudio.play();
+        wrongObjects++;
     }
 
-    /* if (wrongCards === 2){
-        document.getElementById("life1").remove();
-    }
-    else if(wrongCards === 4){
-        document.getElementById("life2").remove();
-    }
-    else if(wrongCards === 6){
-        document.getElementById("life3").remove();
-    }
-    else if(wrongCards === 8){
-        document.getElementById("life4").remove();
-    }
-    else if(wrongCards === 10){
-        document.getElementById("life5").remove();
-    }
-    else if(wrongCards === 12){
-        document.getElementById("life6").remove();
-    }
-    else if(wrongCards === 14){
-        document.getElementById("life7").remove();
-    }
-    else if(wrongCards === 16){
-        document.getElementById("life8").remove();
-    }
-    else if(wrongCards === 18){
-        document.getElementById("life9").remove();
-    }
-    else if(wrongCards === 20){
-        document.getElementById("life10").remove();
-    }
- */
+    objectIDArr.splice(idIndx, 1);
+    objectNameArr.splice(idIndx, 1);
 
-    //If all the cards have been placed correctly then
-    //display a message and reset the cards for
-    //another go
+    switch (wrongObjects) {
+        case 1:
+            $('#life1').show();
+            break;
+        case 2:
+            $('#life2').show();
+            wrongObjects = 0;
+            setTimeout(function () {
+                $('#life1').hide();
+                $('#life2').hide();
 
+                totalLife--;
+                document.getElementById("wrongScoreText").innerHTML = totalLife;
 
-    if (wrongCards === 1) {
-        $('#life1').show();
-    }
-    else if (wrongCards === 2) {
+                if (totalLife == 0) {
+                    clearInterval(interval);
 
-        $('#life2').show();
-        wrongCards = 0;
-        setTimeout(() => {
+                    objectIDArr.forEach(elem => {
+                        clearInterval(elem);
 
-            $('#life1').hide();
-            $('#life2').hide();
+                    });
 
-            totalLife--;
+                    $(gameOverScrn);
 
-            document.getElementById("wrongScoreText").innerHTML = totalLife;
-
-            if (totalLife == 0) {
-
-                idArr.forEach(element=>{
-                    clearInterval(element);
-                });
-
-                audio.pause();
-                gameOver.play();
-    
-                $('#gameOver_Overlay').show();
-    
-                $('#gameOverCard').animate({
-                    left: '15%',
-                    top: '30%',
-                    position: 'absolute',
-                    width: '700px',
-                    height: '700px',
-                    opacity: 1
-                });
-    
-    
-            }
-
-        }, 500);
-
-        
+                }
+            }, 500);
+            break;
     }
 
-
-
-    if (level === "first" && correctCards === 10) {
-
-        levelComplete.play();
+    if (level === "first" && correctObjects == 10) {
+        clearInterval(interval);
+        levelCompleteAudio.play();
         level = "second";
-        $('#contentOverlay').show();
-        $('#successMessage').animate({
-            left: '15%',
-            top: '30%',
-            position: 'absolute',
-            width: '700px',
-            height: '700px',
-            opacity: 1
-        });
+        objectCreateTime = 1500;
+        frameRate = 5;
 
-        idArr.forEach(element=>{
-            clearInterval(element);
-            console.log("IDS: " + element);
-            /* document.getElementById(element).remove(); */
-        });
-
-        cardNameArr.forEach(element=>{
-            
-            console.log("IDS: " + element);
-            document.getElementById(element).remove();
-        });
-
-
-
-        increase();
+        $(removeArrayData);
+        $(levelCompleteScrn);
 
         document.getElementById("content").style.backgroundImage = "url(images/park-min.png)";
 
-        setTimeout(() => {
+    } else if (level === "second" && correctObjects == 20) {
+        clearInterval(interval);
+        levelCompleteAudio.play();
+        level = "last";
+        objectCreateTime = 1200;
+        frameRate = 2;
 
-            $(createTrashObjects);
-            $('#contentOverlay').hide();
-            
-        }, 4000);
-    }
-    else if (level === "second" && correctCards === 20) {
-        levelComplete.play();
-        level = "third";
-        $('#contentOverlay').show();
-        $('#successMessage').animate({
-            left: '15%',
-            top: '30%',
-            position: 'absolute',
-            width: '700px',
-            height: '700px',
-            opacity: 1
-        });
-
-        idArr.forEach(element=>{
-            clearInterval(element);
-            console.log("IDS: " + element);
-            //document.getElementById(element).remove();
-        });
-
-        cardNameArr.forEach(element=>{
-            
-            console.log("IDS: " + element);
-            document.getElementById(element).remove();
-        });
-
-        increase();
+        $(removeArrayData);
+        $(levelCompleteScrn);
 
         document.getElementById("content").style.backgroundImage = "url(images/office_shadow-min.png)";
 
-        setTimeout(() => {
+    }else if (level === "last" && correctObjects == 30) {
+        clearInterval(interval);
+        levelCompleteAudio.play();
+        level = "end";
+        objectCreateTime = 1500;
+        frameRate = 1;
 
-            $(createTrashObjects);
-            document.getElementById("contentOverlay").remove();
-            
-        }, 4000);
+        $(removeArrayData);
+        $(levelCompleteScrn);
+
+        document.getElementById("content").style.backgroundImage = "url(images/Kitchen.png)";
+
     }
 
-    document.getElementById("scoreText").innerHTML = correctCards;
-    //document.getElementById("wrongScoreText").innerHTML = wrongCards;
+
+    document.getElementById("scoreText").innerHTML = correctObjects;
+
+}
+//===============Drop Handle Function ENDS==============//
+
+//================Game Over Screen Show Strats=================//
+function gameOverScrn() {
+    audio.pause();
+    gameOverAudio.play();
+
+    $('#gameOver_Overlay').show();
+    $('#gameOverCard').animate({
+        left: '15%',
+        top: '30%',
+        position: 'absolute',
+        width: '700px',
+        height: '700px',
+        opacity: 1
+    });
+}
+//=================Game Over Screen Show Ends==================//
+
+//================Level Complete Screen Show Strats=================//
+function levelCompleteScrn() {
+    levelComplete.play();
+
+    $('#contentOverlay').show();
+    $('#successMessage').animate({
+        left: '15%',
+        top: '30%',
+        position: 'absolute',
+        width: '700px',
+        height: '700px',
+        opacity: 1
+    });
+
+    //$(increase);
+
+    objectsNumArr = [];
+    $(numberArrSetup);
+
+    setTimeout(() => {
+
+        $('#contentOverlay').hide();
+        $(createObjects);
+        interval = setInterval(() => {
+            $(createObjects);
+        }, objectCreateTime);
 
 
-    if (cardNameArr.length == 0) {
+    }, 4000);
 
-        idArr = [];
-        $(createTrashObjects);
+}
+//=================Level Complete Screen Show Ends==================//
+
+//====================Remove Array Data Starts=======================//
+function removeArrayData() {
+    if (objectIDArr.length > 0) {
+        for (var i = 0; i < objectIDArr.length; i++) {
+            clearInterval(objectIDArr[i]);
+            if (i == (objectIDArr.length - 1)) {
+                objectIDArr = [];
+            }
+        }
+    }
+
+    if (objectNameArr.length > 0) {
+        for (var i = 0; i < objectNameArr.length; i++) {
+            document.getElementById(objectNameArr[i]).remove();
+            if (i == (objectNameArr.length - 1)) {
+                objectNameArr = [];
+            }
+        }
     }
 
 }
-
-
+//====================Remove Array Data END=======================//
