@@ -30,8 +30,8 @@ var binImageArr = ['r.png', 'nr.png'];
 var objectsNumArr = [];
 var objectNameArr = [];
 var objectIDArr = [];
-var trashArr = ['t1.png', 't2.png', 't3.png', 't4.png', 't5.png', 't6.png', 't7.png', 't2.png', 't3.png', 't7.png', 't1.png', 't2.png', 't3.png', 't7.png', 't5.png', 't6.png', 't1.png', 't7.png', 't3.png', 't4.png', 't1.png', 't2.png', 't3.png', 't4.png', 't7.png', 't6.png', 't1.png', 't2.png', 't7.png', 't4.png', 't2.png'];
-var recycleArr = ['r1.png', 'r2.png', 'r3.png', 'r4.png', 'r1.png', 'r1.png', 'r2.png', 'r3.png', 'r2.png', 'r4.png', 'r1.png', 'r2.png', 'r4.png', 'r2.png', 'r1.png', 'r4.png', 'r2.png', 'r3.png', 'r2.png', 'r4.png', 'r1.png', 'r4.png', 'r3.png', 'r2.png', 'r1.png', 'r4.png', 'r2.png', 'r3.png', 'r4.png', 'r1.png', 'r4.png']
+var trashArr = ['home_t1.png', 'home_t2.png', 'home_t3.png', 'home_t4.png', 'home_t5.png', 'home_t6.png', 'home_t7.png', 'home_t8.png', 'home_t9.png', 'home_t10.png', 'home_t11.png', 'home_t12.png', 'home_t13.png', 'home_t14.png', 'home_t15.png', 'home_t1.png', 'home_t2.png', 'home_t3.png', 'home_t4.png', 'home_t5.png', 'home_t6.png', 'home_t7.png', 'home_t8.png', 'home_t9.png', 'home_t10.png', 'home_t11.png', 'home_t12.png', 'home_t13.png', 'home_t14.png', 'home_t15.png'];
+var recycleArr = ['home_r1.png', 'home_r2.png', 'home_r3.png', 'home_r4.png', 'home_r5.png', 'home_r6.png', 'home_r7.png', 'home_r8.png', 'home_r9.png', 'home_r10.png', 'home_r11.png', 'home_r12.png', 'home_r13.png', 'home_r14.png', 'home_r15.png', 'home_r1.png', 'home_r2.png', 'home_r3.png', 'home_r4.png', 'home_r5.png', 'home_r6.png', 'home_r7.png', 'home_r8.png', 'home_r9.png', 'home_r10.png', 'home_r11.png', 'home_r12.png', 'home_r13.png', 'home_r14.png', 'home_r15.png']
 
 var audio = document.getElementById("audioContainer");
 var rightAudio = document.getElementById("rightDrag");
@@ -48,17 +48,13 @@ $('#cardSlots').show();
 
 $('#contentOverlay').hide();
 $('#gameOver_Overlay').hide();
+$('#gameWin_Overlay').hide();
 $('#life1').hide();
 $('#life2').hide();
 
 $('.ui-draggable').draggable();
 
-$('#successMessage').css({
-    left: '580px',
-    top: '250px',
-    width: 0,
-    height: 0
-})
+
 //=================HTML Div Initialization ENDS===============//
 
 //=========Play Button On-click function Start=========//
@@ -72,6 +68,48 @@ function play() {
     $(init);
 }
 //=========Play Button On-click function END==========//
+
+//=========Restart Button On-click function Start=========//
+function restartGame() {
+
+    $('#gameWin_Overlay').hide();
+
+    document.getElementById("content").style.backgroundImage = "url(images/Home_Background-min.png)";
+
+    frameRate = 10;
+    objectCount = 0;
+    objectCreateTime = 0;
+    totalLife = 3;
+    correctObjects = 0;
+    wrongObjects = 0;
+    missedObjects = 0;
+
+    objectsNumArr = [];
+    objectNameArr = [];
+    objectIDArr = [];
+
+
+    audio.play();
+    audio.loop = true;
+    isPlaying = true;
+
+    document.getElementById("wrongScoreText").innerHTML = totalLife;
+    document.getElementById("scoreText").innerHTML = correctObjects;
+
+    objectCreateTime = 2000;
+
+    level = "first";
+
+    //$(binSetup);
+
+    $(numberArrSetup);
+
+    interval = setInterval(function () {
+        console.log("Length " + objectsNumArr.length);
+        $(createObjects);
+    }, objectCreateTime);
+}
+//=========Restart Button On-click function END==========//
 
 //=========PlayPause Button On-click function Starts==========//
 function audioControl() {
@@ -181,11 +219,11 @@ function objectMove(id) {
 
     elem.style.position = "absolute";
 
-    var leftNum = (Math.floor(Math.random() * (elem.parentNode.parentElement.clientWidth-190))+2);
+    var leftNum = (Math.floor(Math.random() * (elem.parentNode.parentElement.clientWidth - 190)) + 2);
 
-    console.log("Random position : " + leftNum + ' '+ x);
+    console.log("Random position : " + leftNum + ' ' + x);
     elem.style.top = 0 + 'px';
-    elem.style.left  = leftNum+ 'px';
+    elem.style.left = leftNum + 'px';
 
     var pos = 0;
     var posX = 0;
@@ -240,7 +278,7 @@ function objectMove(id) {
             wrongAudio.play();
 
             document.getElementById(id).remove();
-            
+
             objectIDArr.splice(objectNameArr.indexOf(id), 1);
             objectNameArr.splice(objectNameArr.indexOf(id), 1);
 
@@ -373,7 +411,7 @@ function handleObjectDrop(event, ui) {
         levelCompleteAudio.play();
         level = "second";
         objectCreateTime = 1500;
-        frameRate = 5;
+        frameRate = 4;
 
         $(removeArrayData);
         $(levelCompleteScrn);
@@ -385,22 +423,34 @@ function handleObjectDrop(event, ui) {
         levelCompleteAudio.play();
         level = "last";
         objectCreateTime = 1200;
-        frameRate = 2;
+        frameRate = 3;
 
         $(removeArrayData);
         $(levelCompleteScrn);
 
         document.getElementById("content").style.backgroundImage = "url(images/office_shadow-min.png)";
 
-    }else if (level === "last" && correctObjects == 30) {
+    } else if (level === "last" && correctObjects == 30) {
         clearInterval(interval);
         levelCompleteAudio.play();
         level = "end";
-        objectCreateTime = 1500;
-        frameRate = 1;
+        objectCreateTime = 1000;
+        frameRate = 2;
 
         $(removeArrayData);
         $(levelCompleteScrn);
+
+        document.getElementById("content").style.backgroundImage = "url(images/Kitchen.png)";
+
+    } else if (level === "end" && correctObjects == 40) {
+        clearInterval(interval);
+        levelCompleteAudio.play();
+        //level = "end";
+        objectCreateTime = 500;
+        frameRate = 1;
+
+        $(removeArrayData);
+        $(WinScreen);
 
         document.getElementById("content").style.backgroundImage = "url(images/Kitchen.png)";
 
@@ -419,25 +469,44 @@ function gameOverScrn() {
 
     $('#gameOver_Overlay').show();
     $('#gameOverCard').animate({
-        left: '15%',
-        top: '30%',
-        position: 'absolute',
+        /* left: '15%',
+        top: '30%', */
+        position: 'relative',
         width: '700px',
         height: '700px',
         opacity: 1
     });
+
+    setTimeout(() => {
+        $(removeArrayData);
+
+        $('#gameOver_Overlay').hide();
+
+        audio.pause();
+        audio.currentTime = 0;
+        isAudioPlaying = false;
+
+        document.getElementById("scoreBoard").innerHTML = correctObjects;
+        $('#gameWin_Overlay').show();
+
+
+        //$(increase);
+
+        objectsNumArr = [];
+
+    }, 4000);
 }
 //=================Game Over Screen Show Ends==================//
 
 //================Level Complete Screen Show Strats=================//
 function levelCompleteScrn() {
-    levelComplete.play();
+    //levelComplete.play();
 
     $('#contentOverlay').show();
     $('#successMessage').animate({
-        left: '15%',
-        top: '30%',
-        position: 'absolute',
+        /* left: '15%',
+        top: '30%', */
+        position: 'relative',
         width: '700px',
         height: '700px',
         opacity: 1
@@ -461,6 +530,27 @@ function levelCompleteScrn() {
 
 }
 //=================Level Complete Screen Show Ends==================//
+
+//================Game WIn Screen Show Strats=================//
+function WinScreen() {
+    //levelComplete.play();
+
+    audio.pause();
+    audio.currentTime = 0;
+    isAudioPlaying = false;
+
+    document.getElementById("scoreBoard").innerHTML = correctObjects;
+
+    $('#gameWin_Overlay').show();
+
+    //$(increase);
+
+    objectsNumArr = [];
+
+
+
+}
+//=================Game Win Screen Show Ends==================//
 
 //====================Remove Array Data Starts=======================//
 function removeArrayData() {
